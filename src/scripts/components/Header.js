@@ -46,17 +46,11 @@ Header.Navbar = React.createClass({
 		}		
 	    return (
 			<div className='ui computer tablet only stackable navbar menu inverted page grid' id={this.state.id}>
-		  		<a className='launch item active' href='#dashboard'>
-			      <span> Dashboard </span>
+		  		<a className='launch item active' href='#files'>
+			      <span> Files </span>
 			    </a>
-			    <a className='item' href='#projects'>
-			      <span> Projects </span>
-			    </a>
-			    <a className='item' href='#tasks'>
-			      <span> Tasks </span>
-			    </a>
-			    <a className='item' href='#team'>
-			      <span> Team </span>
+			    <a className='item' href='#file/create'>
+			      <span> Upload </span>
 			    </a>
 			    {userButton}
 			</div>
@@ -90,17 +84,11 @@ Header.NavbarMobile = React.createClass({
 				      	<img className="ui centered image brand" src='/images/logo-brand.png' />
 				    </div>
 				    <div className='content'>
-				  		<a className='launch item active' href='#dashboard'>
-					      <span> Dashboard </span>
+				  		<a className='launch item active' href='#files'>
+					      <span> Files </span>
 					    </a>
-					    <a className='item' href='#projects'>
-					      <span> Projects </span>
-					    </a>
-					    <a className='item' href='#tasks'>
-					      <span> Tasks </span>
-					    </a>
-					    <a className='item' href='#team'>
-					      <span> Team </span>
+					    <a className='item' href='#file/create'>
+					      <span> Upload </span>
 					    </a>
 				    	{userButton}
 				    </div>

@@ -14,7 +14,8 @@ var Model = Backbone.Model.extend({
 		description: '',
 		user_id: null,
 		type: '',
-		path: ''
+		path: '',
+		metrics: null
 	},
 
 	url: function(){

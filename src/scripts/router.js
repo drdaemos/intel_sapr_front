@@ -59,7 +59,7 @@ var Router = Backbone.Router.extend({
         this.show({
             page: 'File',
             query: {
-                id: id
+                file: id
             }
         });
     },

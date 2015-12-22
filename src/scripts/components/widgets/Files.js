@@ -55,8 +55,7 @@ var Component = React.createClass({
                             files
                             .filter(
                                 function (file) {
-                                    // var valid = file.deleted != 1;
-                                    var valid = true;
+                                    var valid = file.deleted != 1;
                                     if (!_.isUndefined(filters)) {
                                         if (filters.uploaded != 0) valid = (valid && file.user_id == filters.uploaded);
                                     }
