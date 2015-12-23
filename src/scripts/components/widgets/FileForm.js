@@ -96,9 +96,9 @@ var Component = React.createClass({
   render: function() {
     return (
         <Widget width={'sixteen'} title={'New file'}>
-            <form className='ui form' id={this.formName} >
+            <form className='ui large form' id={this.formName} >
 
-              <div className='fields'>
+              <div className='field'>
                 <div className='required sixteen wide field'>
                   <label>File name</label>
                   <div className='ui input'>
@@ -106,17 +106,30 @@ var Component = React.createClass({
                   </div>
                 </div>
               </div>
-              <div className='two fields'>
-                <div className='ten wide field'>
+              <div className='field'>
+                <div className='sixteen wide field'>
                   <label>Description</label>
                   <div className='ui input'>
                     <textarea name='description' ref='description' placeholder='Description'></textarea>
                   </div>
                 </div>
-                <div className='six wide field'>
-                  <Dropzone onDrop={this.onDrop} multiple={false} >
-                    <div>Try dropping file here, or click to select file to upload.</div>
-                  </Dropzone>
+              </div>
+              <div className='field'>
+                <div className='sixteen wide field'>
+                  <label>Uploaded file</label>
+                  <div className='inline field'>
+                    <div className="ui message">
+                      <Dropzone onDrop={this.onDrop} multiple={false} className="ui dropzone">
+                        <div>Try dropping file here, or click to select file to upload.</div>
+                        <div className='ui items'>
+                          {!_.isUndefined(this.state.file)
+                            ? <Component.File name={this.state.file} />
+                            : ''
+                          }
+                        </div>
+                      </Dropzone>
+                    </div>
+                  </div>
                 </div>
 
               </div>
@@ -130,6 +143,21 @@ var Component = React.createClass({
         </Widget>
     );
   }
+});
+
+Component.File = React.createClass({
+    render: function() {
+        return (
+            <div className='item'>
+              <div className="middle aligned content">
+                <div className="header">
+                  <i className="file text icon"></i>
+                  {this.props.name}
+                </div>
+              </div>
+            </div>
+        );
+    }
 });
 
 module.exports = Component;

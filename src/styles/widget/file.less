@@ -1,0 +1,20 @@
+.segment.summary {
+	p {
+		&:after{
+			font-size: 20px;
+			display: block;
+			color: #333;
+			content: '...'
+		}
+		font-style: italic;
+	}
+
+	blockquote:before {
+		display: block;
+	    content: "“";
+	    height: 0.7rem;
+	    font-size: 3rem;
+	    margin-left: -2rem;
+	    font-style: italic;
+	}
+}

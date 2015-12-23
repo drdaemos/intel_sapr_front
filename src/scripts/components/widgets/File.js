@@ -6,11 +6,13 @@ var Backbone = require('backbone');
 var backboneMixin = require('backbone-react-component');
 
 // CSS
+require('styles/widget/file.less');
 
 // Images
 
 // Elements
 var Widget = require('scripts/components/Widget');
+var Statistics = require('scripts/components/widgets/File/Statistics');
 
 var Component = React.createClass({
   mixins: [backboneMixin],
@@ -43,8 +45,10 @@ var Component = React.createClass({
       if (!_.isUndefined(file)) {
         var uploader = this.props.collection.users.tryGet(file.get('user_id'), 'Unknown');
         var users = this.props.collection.users;
+        var metrics = file.get('metrics');
         return {
           file: file,
+          metrics: metrics,
           uploader: uploader,
           users: users
         };
@@ -65,19 +69,24 @@ var Component = React.createClass({
     }
     return (
 	    <Widget width={'sixteen'} title={title}>
-        <div className='ui grid'>
           {ready
             ?
-            <div className='row'>
-              <Component.Description data={data} />
-              <Component.Properties data={data} />
+            <div className='ui grid'>
+              <div className='row'>
+                <Component.Description data={data} />
+                <Component.Properties data={data} />
+              </div>
+              <div className='row'>
+                <Component.Statistics data={data} />
+              </div>
             </div>
             :
-            <div className='row'>
-              <p>Please wait while data is being loaded </p>
+            <div className='ui grid'>
+              <div className='row'>
+                <p>Please wait while data is being loaded </p>
+              </div>
             </div>
           }
-        </div>
 	    </Widget>
     );
   }
@@ -87,18 +96,21 @@ Component.Properties = React.createClass({
   render: function() {
     var uploader = (this.props.data.uploader instanceof Backbone.Model)
         ? this.props.data.uploader.get('name')
-        : this.props.data.uploader
-    // var date = new Date(this.props.data.file.get('started_date')).toDateString();
-    // var estimation = this.props.data.file.get('estimation') + ' minutes';
-    // var progress = this.props.data.file.get('progress') + ' minutes';
+        : this.props.data.uploader;
+
+    var keywords = this.props.data.file.getMetric('keywords', 'summarize');
     return (
       <div className='six wide column'>
         <h3 className='ui dividing header'>File info</h3>
         <table className='ui very basic table'>
           <tbody>
-            <tr>
+            <tr className="top aligned">
               <td>Uploader</td>
               <td>{uploader}</td>
+            </tr>
+            <tr className="top aligned">
+              <td>Keywords</td>
+              <td>{keywords.join(', ')}</td>
             </tr>
           </tbody>
         </table>
@@ -109,11 +121,34 @@ Component.Properties = React.createClass({
 
 Component.Description = React.createClass({
   render: function() {
+    var summary = this.props.data.file.getMetric('summary', 'summarize');
+    console.log(summary);
     return (
       <div className='ten wide column'>
         <div className='ui basic segment'>
           {this.props.data.file.get('description')}
         </div>
+
+        <div className='ui segment summary'>
+          <blockquote>
+            {summary.map(
+              function(paragraph) {
+                return (<p>{paragraph.sentence}</p>);
+              })
+            }
+          </blockquote>
+        </div>
+      </div>
+    );
+  }
+});
+
+Component.Statistics = React.createClass({
+  render: function() {
+    return (
+      <div className='sixteen wide column'>
+        <h3 className='ui dividing header'>Text statistics</h3>
+        <Statistics {...this.props} />
       </div>
     );
   }

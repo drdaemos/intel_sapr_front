@@ -18,6 +18,14 @@ var Model = Backbone.Model.extend({
 		metrics: null
 	},
 
+	getMetric: function(key, group) {
+		console.log(this);
+		var metric = _.findWhere(this.get('metrics'), {group: group, key: key});
+		if (!_.isUndefined(metric)) {
+			return JSON.parse(metric.value);
+		} else return metric;
+	},
+
 	url: function(){
 	    return window.app.API + '/texts';
 	},
